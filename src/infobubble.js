@@ -26,7 +26,7 @@
  * limitations under the License.
  */
 
-
+(function(){
 /**
  * A CSS3 InfoBubble v0.8
  * @param {Object.<string, *>=} opt_options Optional properties to set.
@@ -39,6 +39,7 @@ function InfoBubble(opt_options) {
   this.activeTab_ = null;
   this.baseZIndex_ = 100;
   this.isOpen_ = false;
+  this.wrapperClass = '';
 
   var options = opt_options || {};
 
@@ -93,6 +94,8 @@ function InfoBubble(opt_options) {
   if (options['closeSrc'] == undefined) {
     options['closeSrc'] = this.CLOSE_SRC_;
   }
+
+  this.wrapperClass = options['wrapperClass'];
 
   this.buildDom_();
   this.setValues(options);
@@ -210,6 +213,8 @@ InfoBubble.prototype.extend = function(obj1, obj2) {
  */
 InfoBubble.prototype.buildDom_ = function() {
   var bubble = this.bubble_ = document.createElement('DIV');
+  bubble.className = 'info_bubble_wrapper';
+  bubble.className += (' '+(this.wrapperClass ? this.wrapperClass : ''));
   bubble.style['position'] = 'absolute';
   bubble.style['zIndex'] = this.baseZIndex_;
 
@@ -233,6 +238,7 @@ InfoBubble.prototype.buildDom_ = function() {
 
   // Content area
   var contentContainer = this.contentContainer_ = document.createElement('DIV');
+  contentContainer.className = 'info_bubble_content_container';
   contentContainer.style['overflowX'] = 'auto';
   contentContainer.style['overflowY'] = 'auto';
   contentContainer.style['cursor'] = 'default';
@@ -244,6 +250,7 @@ InfoBubble.prototype.buildDom_ = function() {
 
   // Arrow
   var arrow = this.arrow_ = document.createElement('DIV');
+  arrow.className = 'info_bubble_arrow';
   arrow.style['position'] = 'relative';
 
   var arrowOuter = this.arrowOuter_ = document.createElement('DIV');
@@ -261,6 +268,7 @@ InfoBubble.prototype.buildDom_ = function() {
 
   // Shadow
   var bubbleShadow = this.bubbleShadow_ = document.createElement('DIV');
+  bubbleShadow.className = 'info_bubble_shadow';
   bubbleShadow.style['position'] = 'absolute';
 
   // Hide the InfoBubble by default
@@ -1528,8 +1536,6 @@ InfoBubble.prototype.removeTab = function(index) {
 
   this.tabs_.splice(index, 1);
 
-  delete tab;
-
   for (var i = 0, t; t = this.tabs_[i]; i++) {
     t.tab.index = i;
   }
@@ -1593,7 +1599,6 @@ InfoBubble.prototype.getElementSize_ = function(element, opt_maxWidth,
   }
 
   document.body.removeChild(sizer);
-  delete sizer;
   return size;
 };
 
@@ -1778,3 +1783,4 @@ InfoBubble.prototype.positionCloseButton_ = function() {
   this.close_.style['right'] = this.px(right);
   this.close_.style['top'] = this.px(top);
 };
+})();

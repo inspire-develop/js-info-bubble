@@ -33,3 +33,8 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
+
+## How to compile soruce
+```
+java -jar google-closure-compiler.jar --module_wrapper --transform_amd_modules --js src/infobubble.js --js_output_file src/infobubble-compiled.js
+```   
